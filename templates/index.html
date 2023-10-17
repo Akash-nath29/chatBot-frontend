@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}ChatBot: Home{% endblock %}
+
+{% block body %}
+
+<center><h1>ChatBot</h1></center>
+
+<div class="chats">
+    {% for message in messages %}
+    <div class="message">
+        <h3>{{message.message}}</h3>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="inputs">
+    <form action="/process" method="post">
+        <input type="text" name="userQuery" id="userQuery" placeholder="Message">
+        <input type="submit" value="Send" onclick="formSubmit()">
+    </form>
+</div>
+
+{% endblock %}
