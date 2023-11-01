@@ -13,24 +13,24 @@ tokenizer = Tokenizer()
 
 @app.route('/')
 def index():
-    return render_template('chat.html')
+    return render_template('chat.html') #return render_template('index.html', response=None)
 
-@app.route('/ask', methods=['POST'])
+@app.route('/ask', methods=['GET', 'POST'])
 def ask():
-    user_message = request.form['user_message']
+    user_message = request.form.get('user_message')
 
     # Tokenize the user message (adapt this to your tokenizer)
     user_message = [user_message]
     user_message = tokenizer.texts_to_sequences(user_message)
-    user_message = pad_sequences(user_message, padding='post', maxlen=YOUR_MAX_SEQUENCE_LENGTH)
+    user_message = pad_sequences(user_message, padding='post', maxlen=18)
 
     # Make a prediction using the loaded model
     response = model.predict(user_message)
 
     # Convert the model's response back to text (adapt this to your specific dataset)
     response = "This is a placeholder response."
-
-    return jsonify({'response': response})
+    print(jsonify({'response': response}))
+    return jsonify({'response': response}) #return render_template('index.html', response=response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0', port=5002)
